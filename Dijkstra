@@ -1,0 +1,127 @@
+__author__ = 'Kalla Baek'
+#Dijkstra algorithm to report Management Science lecture
+
+def dijkstra(graph,src,dest,visited=[],distances={},predecessors={}):
+
+    if src not in graph:
+        raise TypeError('there is no source node in matrix')
+    if dest not in graph:
+        raise TypeError('There is no destination node in matrix')
+
+    if src == dest:
+        # We build the shortest path and display it
+        path=[]
+        pred=dest
+        while pred != None:
+            path.append(pred)
+            pred=predecessors.get(pred,None)
+        print('shortest path: '+str(path)+" cost="+str(distances[dest]))
+    else :
+        # if it is the initial  run, initializes the cost
+        if not visited:
+            distances[src]=0
+        # visit the neighbors
+        for neighbor in graph[src] :
+            if neighbor not in visited:
+                new_distance = distances[src] + graph[src][neighbor]
+                if new_distance < distances.get(neighbor,float('inf')):
+                    distances[neighbor] = new_distance
+                    predecessors[neighbor] = src
+        # mark as visited
+        visited.append(src)
+        # now that all neighbors have been visited: recurse
+        # select the non visited node with lowest distance 'x'
+        # run Dijskstra with src='x'
+        unvisited={}
+        for k in graph:
+            if k not in visited:
+                unvisited[k] = distances.get(k,float('inf'))
+        x=min(unvisited, key=unvisited.get)
+        dijkstra(graph,x,dest,visited,distances,predecessors)
+        #recursive
+
+if __name__ == "__main__":
+    print "Please input the number of nodes did you want to add(include source and destination)"
+    print " # Notice : if you don't want to input(there is no route), input 0"
+    print "The number of nodes : ",
+    column = int(raw_input())
+    dic = dict()
+    dic2 = dict()
+    
+    for i in range(column):
+        dic[i]={}
+        for j in range(column):
+            if i == j :
+                dic[i][j] = 0
+                continue
+            if j == 0 :
+                print "Input the",(i),"value - to source node :",
+                dic[i][j] = int(raw_input())
+                if dic[i][j] == 0:
+                    dic[i][j] = float('inf')
+                print "dic",(i),(j)," is ",dic[i][j]
+                continue
+            elif j == column-1:
+                print "Input the",(i),"value - to destination node :",
+                dic[i][j] = int(raw_input())
+                if dic[i][j] == 0:
+                    dic[i][j] = float('inf')
+                print "dic",(i),(j)," is ",dic[i][j]
+                continue
+            elif j == 1 :
+                print "Input the",(i),"value - to 1st node :",
+                dic[i][j] = int(raw_input())
+                if dic[i][j] == 0:
+                    dic[i][j] = float('inf')
+                print "dic",(i),(j)," is ",dic[i][j]
+                continue                
+            elif j == 2 :
+                print "Input the",(i),"value - to 2nd node :",
+                dic[j] = int(raw_input())
+                if dic[i][j] == 0:
+                    dic[i][j] = float('inf')
+                print "dic",(i),(j)," is ",dic[i][j]
+                continue                
+            elif j == 3 :
+                print "Input the",(i),"value - to 3rd node :",
+                dic[i][j] = int(raw_input())
+                if dic[i][j] == 0:
+                    dic[i][j] = float('inf')
+                continue                    
+            else:
+                print "Input the",(i),"value - to",(j),"th node :",
+                dic[i][j] = int(raw_input())
+                if dic[i][j] == 0:
+                    dic[i][j] = float('inf')
+                continue                    
+        #j for is completed
+        if i == 0:
+            print " Your source node value is ",(dic[i])
+        #elif i == column-1:
+        #    print " Your destination node value is ",(dic[i])
+        #    continue
+        elif i == 1:
+            print " Your 1st node value is ",(dic[i])
+        elif i == 2:
+            print " Your 2nd node value is ",(dic[i])
+        elif i == 3:
+            print " Your 3rd node value is ",(dic[i])
+        else:
+            print " Your",(i),"th node value is ",(dic[i])        
+    #i for is completed
+    print dic
+    dijkstra(dic,0,column-1)
+    
+    """
+    graph = {'src': {'1': 60, '2': 90, '3': 130, '4': 190, '5': 260},
+            '1': {'2': 60, '3': 90, '4': 130, '5': 190, 'dest': 260},
+            '2': {'3': 60, '4': 90, '5': 130, 'dest': 190},
+            '3': {'4': 60, '5': 90, 'dest': 130},
+            '4': {'5': 60, 'dest': 90},
+            '5': {'dest':60},
+            'dest': {}}
+    print graph['src']
+    dijkstra(graph,'src','dest')
+
+    
+    """
