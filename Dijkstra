@@ -1,5 +1,6 @@
 __author__ = 'Kalla Baek'
 #Dijkstra algorithm to report Management Science lecture
+#optimized in python 2.7
 
 def dijkstra(graph,src,dest,visited=[],distances={},predecessors={}):
 
