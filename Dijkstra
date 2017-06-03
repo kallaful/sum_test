@@ -1,7 +1,7 @@
 __author__ = 'Kalla Baek'
 #Dijkstra algorithm to report Management Science lecture
 #optimized in python 2.7
-import operator
+import operator, time
 
 def dijkstra(dic,src,dest,visited=[],distances={},predecessors={}):
 
@@ -142,6 +142,7 @@ if num == "Y" or num == "y":
         print k,"-",dic[k]
     print ""
     dijkstra(dic,0,column-1)
+    raw_input("")   
     
 else:
     print "========================================================================="
@@ -155,4 +156,5 @@ else:
     for i in range(7):
         print (i),"-",dic[i]
     dijkstra(dic,0,6)
+    raw_input("")  
     
