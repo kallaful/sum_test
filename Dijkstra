@@ -14,6 +14,7 @@ def dijkstra(dic,src,dest,visited=[],distances={},predecessors={}):
     
     if src == dest:
         # build the shortest path and display it
+        print""
         while pred != None:
             print "From",pred,
             path.append(pred)
@@ -34,7 +35,7 @@ def dijkstra(dic,src,dest,visited=[],distances={},predecessors={}):
                 if new_distance < distances.get(neighbor,float('inf')):
                     distances[neighbor] = new_distance
                     predecessors[neighbor] = src
-                    print " This is predecessors",predecessors
+        print " Shortest path start from",predecessors
         # mark as visited
         visited.append(src)
         # now that all neighbors have been visited: recurse
@@ -45,7 +46,7 @@ def dijkstra(dic,src,dest,visited=[],distances={},predecessors={}):
             if k not in visited:
                 unvisited[k] = distances.get(k,float('inf'))
         x=min(unvisited, key=unvisited.get)
-        
+        print ""
         print "",x,"trial"
         sorted_x = sorted(unvisited.items(), key=operator.itemgetter(1))
         sorted_x.reverse
@@ -58,9 +59,10 @@ def inp_value(i,j):
     if dic[i][j] == 0:
         dic[i][j] = float('inf')
 
-if __name__ == "__main__":
-    """
-    
+print "Did you want input your value? Y/N :",
+no = raw_input()
+if no == "Y" or no == "y":
+    print "========================================================================="
     print "Please input the number of nodes did you want to add(include source and destination)"
     print " # Notice : if you don't want to input(there is no route), input 0"
     print "The number of nodes : ",
@@ -140,8 +142,8 @@ if __name__ == "__main__":
     print ""
     dijkstra(dic,0,column-1)
     
-    """
-    
+else:
+    print "========================================================================="
     dic = {0: {1: 60, 2: 90, 3: 130, 4: 190, 5: 260},
            1: {2: 60, 3: 90, 4: 130, 5: 190, 6: 260},
            2: {3: 60, 4: 90, 5: 130, 6: 190},
