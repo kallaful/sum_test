@@ -19,23 +19,28 @@ def dijkstra(dic,src,dest,visited=[],distances={},predecessors={}):
             print "From",pred,
             path.append(pred)
             pred=predecessors.get(pred,None)
+            # getting value of pred. if not, return None
             if not pred == None:
                 print "to",pred
         path.reverse()
+        # to show path in human readable
         print'shortest path:',str(path),"and cost =",str(distances[dest])
         
     else :
         # Initiailize
         if not visited:
+            #if visited is empty
             distances[src]=0
-        # visit the neighbors
-        for neighbor in dic[src] :
+            
+        for adj in dic[src] :
+            # go to adjacent nodes
             #print " Shortest path start from",predecessors
-            if neighbor not in visited:
-                new_distance = distances[src] + dic[src][neighbor]
-                if new_distance < distances.get(neighbor,float('inf')):
-                    distances[neighbor] = new_distance
-                    predecessors[neighbor] = src
+            if adj not in visited:
+                new_d = distances[src] + dic[src][adj]
+                if new_d < distances.get(adj,float('inf')):
+                    distances[adj] = new_d
+                    print "--This is new distance from",src,"to",adj,",distance :",new_d
+                    predecessors[adj] = src
                 print " Shortest path start from",predecessors
         # mark as visited
         visited.append(src)
@@ -48,13 +53,13 @@ def dijkstra(dic,src,dest,visited=[],distances={},predecessors={}):
                 unvisited[k] = distances.get(k,float('inf'))
         x=min(unvisited, key=unvisited.get)
         print "",x,"trials result"
+        #print visited,"is fixed"
         sorted_x = sorted(unvisited.items(), key=operator.itemgetter(1))
         sorted_x.reverse
         print sorted_x
         print ""
         print "-----------------------------------------"
         dijkstra(dic,x,dest,visited,distances,predecessors)
-
         #recursive
 
 def inp_value(i,j):
@@ -62,9 +67,11 @@ def inp_value(i,j):
     if dic[i][j] == 0:
         dic[i][j] = float('inf')
 
+
+#__main__
 print "Did you want input your value? Y/N :",
-no = raw_input()
-if no == "Y" or no == "y":
+num = raw_input()
+if num == "Y" or num == "y":
     print "========================================================================="
     print "Please input the number of nodes did you want to add(include source and destination)"
     print " # Notice : if you don't want to input(there is no route), input 0"
