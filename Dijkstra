@@ -2,15 +2,15 @@ __author__ = 'Kalla Baek'
 #Dijkstra algorithm to report Management Science lecture
 #optimized in python 2.7
 
-def dijkstra(graph,src,dest,visited=[],distances={},predecessors={}):
+def dijkstra(dic,src,dest,visited=[],distances={},predecessors={}):
 
-    if src not in graph:
+    if src not in dic:
         raise TypeError('there is no source node in matrix')
-    if dest not in graph:
+    if dest not in dic:
         raise TypeError('There is no destination node in matrix')
 
     if src == dest:
-        # We build the shortest path and display it
+        # build the shortest path and display it
         path=[]
         pred=dest
         while pred != None:
@@ -18,13 +18,13 @@ def dijkstra(graph,src,dest,visited=[],distances={},predecessors={}):
             pred=predecessors.get(pred,None)
         print('shortest path: '+str(path)+" cost="+str(distances[dest]))
     else :
-        # if it is the initial  run, initializes the cost
+        # Initiailize
         if not visited:
             distances[src]=0
         # visit the neighbors
-        for neighbor in graph[src] :
+        for neighbor in dic[src] :
             if neighbor not in visited:
-                new_distance = distances[src] + graph[src][neighbor]
+                new_distance = distances[src] + dic[src][neighbor]
                 if new_distance < distances.get(neighbor,float('inf')):
                     distances[neighbor] = new_distance
                     predecessors[neighbor] = src
@@ -34,17 +34,21 @@ def dijkstra(graph,src,dest,visited=[],distances={},predecessors={}):
         # select the non visited node with lowest distance 'x'
         # run Dijskstra with src='x'
         unvisited={}
-        for k in graph:
+        for k in dic:
             if k not in visited:
                 unvisited[k] = distances.get(k,float('inf'))
         x=min(unvisited, key=unvisited.get)
-        dijkstra(graph,x,dest,visited,distances,predecessors)
+
+        dijkstra(dic,x,dest,visited,distances,predecessors)
         #recursive
 
 if __name__ == "__main__":
+    
+    """
     print "Please input the number of nodes did you want to add(include source and destination)"
     print " # Notice : if you don't want to input(there is no route), input 0"
     print "The number of nodes : ",
+    
     column = int(raw_input())
     dic = dict()
     dic2 = dict()
@@ -78,9 +82,12 @@ if __name__ == "__main__":
                 continue                
             elif j == 2 :
                 print "Input the",(i),"value - to 2nd node :",
-                dic[j] = int(raw_input())
-                if dic[i][j] == 0:
-                    dic[i][j] = float('inf')
+                dic[i][j] = int(raw_input())
+                try:
+                    if dic[i][j] == 0:
+                        dic[i][j] = float('inf')
+                except KeyError:
+                    print "why not?"
                 print "dic",(i),(j)," is ",dic[i][j]
                 continue                
             elif j == 3 :
@@ -102,27 +109,27 @@ if __name__ == "__main__":
         #    print " Your destination node value is ",(dic[i])
         #    continue
         elif i == 1:
-            print " Your 1st node value is ",(dic[i])
+            print " Your 1 st node value is ",(dic[i])
         elif i == 2:
-            print " Your 2nd node value is ",(dic[i])
+            print " Your 2 nd node value is ",(dic[i])
         elif i == 3:
-            print " Your 3rd node value is ",(dic[i])
+            print " Your 3 rd node value is ",(dic[i])
         else:
             print " Your",(i),"th node value is ",(dic[i])        
     #i for is completed
-    print dic
+    for k in range(column):
+        print k,"-",dic[k]
     dijkstra(dic,0,column-1)
-    
     """
-    graph = {'src': {'1': 60, '2': 90, '3': 130, '4': 190, '5': 260},
+    
+    
+    dic = {'src': {'1': 60, '2': 90, '3': 130, '4': 190, '5': 260},
             '1': {'2': 60, '3': 90, '4': 130, '5': 190, 'dest': 260},
             '2': {'3': 60, '4': 90, '5': 130, 'dest': 190},
             '3': {'4': 60, '5': 90, 'dest': 130},
             '4': {'5': 60, 'dest': 90},
             '5': {'dest':60},
             'dest': {}}
-    print graph['src']
-    dijkstra(graph,'src','dest')
-
+    print dic
+    dijkstra(dic,'src','dest')
     
-    """
