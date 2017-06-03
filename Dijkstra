@@ -1,22 +1,28 @@
 __author__ = 'Kalla Baek'
 #Dijkstra algorithm to report Management Science lecture
 #optimized in python 2.7
+import operator
 
 def dijkstra(dic,src,dest,visited=[],distances={},predecessors={}):
 
     if src not in dic:
-        raise TypeError('there is no source node in matrix')
+        raise TypeError('There is no source node in matrix')
     if dest not in dic:
         raise TypeError('There is no destination node in matrix')
-
+    path=[]
+    pred=dest
+    
     if src == dest:
         # build the shortest path and display it
-        path=[]
-        pred=dest
         while pred != None:
+            print "From",pred,
             path.append(pred)
             pred=predecessors.get(pred,None)
-        print('shortest path: '+str(path)+" cost="+str(distances[dest]))
+            if not pred == None:
+                print "to",pred
+        path.reverse()
+        print'shortest path:',str(path),"and cost =",str(distances[dest])
+        
     else :
         # Initiailize
         if not visited:
@@ -28,6 +34,7 @@ def dijkstra(dic,src,dest,visited=[],distances={},predecessors={}):
                 if new_distance < distances.get(neighbor,float('inf')):
                     distances[neighbor] = new_distance
                     predecessors[neighbor] = src
+                    print " This is predecessors",predecessors
         # mark as visited
         visited.append(src)
         # now that all neighbors have been visited: recurse
@@ -38,13 +45,22 @@ def dijkstra(dic,src,dest,visited=[],distances={},predecessors={}):
             if k not in visited:
                 unvisited[k] = distances.get(k,float('inf'))
         x=min(unvisited, key=unvisited.get)
-
+        
+        print "",x,"trial"
+        sorted_x = sorted(unvisited.items(), key=operator.itemgetter(1))
+        sorted_x.reverse
+        print sorted_x
         dijkstra(dic,x,dest,visited,distances,predecessors)
         #recursive
 
+def inp_value(i,j):
+    dic[i][j] = int(raw_input())
+    if dic[i][j] == 0:
+        dic[i][j] = float('inf')
+
 if __name__ == "__main__":
-    
     """
+    
     print "Please input the number of nodes did you want to add(include source and destination)"
     print " # Notice : if you don't want to input(there is no route), input 0"
     print "The number of nodes : ",
@@ -61,44 +77,44 @@ if __name__ == "__main__":
                 continue
             if j == 0 :
                 print "Input the",(i),"value - to source node :",
-                dic[i][j] = int(raw_input())
+                dic[i][j] = float(raw_input())
                 if dic[i][j] == 0:
                     dic[i][j] = float('inf')
-                print "dic",(i),(j)," is ",dic[i][j]
+                #print "dic",(i),(j)," is ",dic[i][j]
                 continue
             elif j == column-1:
                 print "Input the",(i),"value - to destination node :",
-                dic[i][j] = int(raw_input())
+                dic[i][j] = float(raw_input())
                 if dic[i][j] == 0:
                     dic[i][j] = float('inf')
-                print "dic",(i),(j)," is ",dic[i][j]
+                #print "dic",(i),(j)," is ",dic[i][j]
                 continue
             elif j == 1 :
-                print "Input the",(i),"value - to 1st node :",
-                dic[i][j] = int(raw_input())
+                print "Input the",(i),"value - to 1 st node :",
+                dic[i][j] = float(raw_input())
                 if dic[i][j] == 0:
                     dic[i][j] = float('inf')
-                print "dic",(i),(j)," is ",dic[i][j]
+                #print "dic",(i),(j)," is ",dic[i][j]
                 continue                
             elif j == 2 :
-                print "Input the",(i),"value - to 2nd node :",
-                dic[i][j] = int(raw_input())
+                print "Input the",(i),"value - to 2 nd node :",
+                dic[i][j] = float(raw_input())
                 try:
                     if dic[i][j] == 0:
                         dic[i][j] = float('inf')
                 except KeyError:
                     print "why not?"
-                print "dic",(i),(j)," is ",dic[i][j]
+                #print "dic",(i),(j)," is ",dic[i][j]
                 continue                
             elif j == 3 :
-                print "Input the",(i),"value - to 3rd node :",
-                dic[i][j] = int(raw_input())
+                print "Input the",(i),"value - to 3 rd node :",
+                dic[i][j] = float(raw_input())
                 if dic[i][j] == 0:
                     dic[i][j] = float('inf')
                 continue                    
             else:
                 print "Input the",(i),"value - to",(j),"th node :",
-                dic[i][j] = int(raw_input())
+                dic[i][j] = float(raw_input())
                 if dic[i][j] == 0:
                     dic[i][j] = float('inf')
                 continue                    
@@ -117,19 +133,23 @@ if __name__ == "__main__":
         else:
             print " Your",(i),"th node value is ",(dic[i])        
     #i for is completed
+    print ""
+    print "Your input"
     for k in range(column):
         print k,"-",dic[k]
+    print ""
     dijkstra(dic,0,column-1)
+    
     """
     
-    
-    dic = {'src': {'1': 60, '2': 90, '3': 130, '4': 190, '5': 260},
-            '1': {'2': 60, '3': 90, '4': 130, '5': 190, 'dest': 260},
-            '2': {'3': 60, '4': 90, '5': 130, 'dest': 190},
-            '3': {'4': 60, '5': 90, 'dest': 130},
-            '4': {'5': 60, 'dest': 90},
-            '5': {'dest':60},
-            'dest': {}}
-    print dic
-    dijkstra(dic,'src','dest')
+    dic = {0: {1: 60, 2: 90, 3: 130, 4: 190, 5: 260},
+           1: {2: 60, 3: 90, 4: 130, 5: 190, 6: 260},
+           2: {3: 60, 4: 90, 5: 130, 6: 190},
+           3: {4: 60, 5: 90, 6: 130},
+           4: {5: 60, 6: 90},
+           5: {6:60},
+           6: {}}
+    for i in range(5):
+        print dic[i]
+    dijkstra(dic,0,6)
     
