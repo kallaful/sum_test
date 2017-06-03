@@ -80,13 +80,14 @@ def inp_value(col,row):
 # This is
 # My 
 # __main__
-
-print "Did you want input your value? Y/N :",
+print "12146310", __author__
+print "Did you want to input your own value? Y/N :",
 num = raw_input()
+
 if num == "Y" or num == "y":
     print "========================================================================="
     print "Please input the number of nodes did you want to add(include source and destination)"
-    print " # Notice : if you don't want to input(there is no route), input 0"
+    print " # Notice : if you can't input distance(there is no route), just input 0"
     print "The number of nodes : ",
     
     column = int(raw_input())
