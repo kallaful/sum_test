@@ -30,12 +30,13 @@ def dijkstra(dic,src,dest,visited=[],distances={},predecessors={}):
             distances[src]=0
         # visit the neighbors
         for neighbor in dic[src] :
+            #print " Shortest path start from",predecessors
             if neighbor not in visited:
                 new_distance = distances[src] + dic[src][neighbor]
                 if new_distance < distances.get(neighbor,float('inf')):
                     distances[neighbor] = new_distance
                     predecessors[neighbor] = src
-        print " Shortest path start from",predecessors
+                print " Shortest path start from",predecessors
         # mark as visited
         visited.append(src)
         # now that all neighbors have been visited: recurse
@@ -46,12 +47,14 @@ def dijkstra(dic,src,dest,visited=[],distances={},predecessors={}):
             if k not in visited:
                 unvisited[k] = distances.get(k,float('inf'))
         x=min(unvisited, key=unvisited.get)
-        print ""
-        print "",x,"trial"
+        print "",x,"trials result"
         sorted_x = sorted(unvisited.items(), key=operator.itemgetter(1))
         sorted_x.reverse
         print sorted_x
+        print ""
+        print "-----------------------------------------"
         dijkstra(dic,x,dest,visited,distances,predecessors)
+
         #recursive
 
 def inp_value(i,j):
@@ -151,7 +154,7 @@ else:
            4: {5: 60, 6: 90},
            5: {6:60},
            6: {}}
-    for i in range(5):
-        print dic[i]
+    for i in range(7):
+        print (i),"-",dic[i]
     dijkstra(dic,0,6)
     
