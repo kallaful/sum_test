@@ -19,7 +19,7 @@ def dijkstra(dic,src,dest,visited=[],distances={},predecessors={}):
             print "From",pred,
             path.append(pred)
             pred=predecessors.get(pred,None)
-            # getting value of pred. if not, return None
+            # getting value of pred. if not, return None to stop appending
             if not pred == None:
                 print "to",pred
         path.reverse()
@@ -34,27 +34,34 @@ def dijkstra(dic,src,dest,visited=[],distances={},predecessors={}):
             
         for adj in dic[src] :
             # go to adjacent nodes
-            #print " Shortest path start from",predecessors
             if adj not in visited:
-                new_d = distances[src] + dic[src][adj]
+                new_d = distances[src]+dic[src][adj]
+                # print "adj",adj," // distances[src]",distances[src],"// dic[src][adj]",dic[src][adj]
                 if new_d < distances.get(adj,float('inf')):
+                # if new road is shorter than original
+                # or if there is no road
                     distances[adj] = new_d
-                    print "--This is new distance from",src,"to",adj,",distance :",new_d
+                    # alter distance into shorter one from original
+                    # print "--This is new distance from",src,"to",adj,",distance :",new_d
                     predecessors[adj] = src
-                print " Shortest path start from",predecessors
-        # mark as visited
+                    # save path's source node into predecessors dictionary             
+                print "  Each trial",predecessors
+                # shortest path repeated in each dic[src]
+        print " Shortest path start from",predecessors
         visited.append(src)
-        # now that all neighbors have been visited: recurse
-        # select the non visited node with lowest distance 'x'
-        # run Dijskstra with src='x'
-        unvisited={}
-        for k in dic:
-            if k not in visited:
-                unvisited[k] = distances.get(k,float('inf'))
-        x=min(unvisited, key=unvisited.get)
+        print visited, "is fixed"
+
+        n_visited={}
+        for i in dic:
+            if i not in visited:
+                n_visited[i] = distances.get(i,float('inf'))
+                print "to",i,"node, distance :",n_visited[i]
+                
+        x=min(n_visited, key=n_visited.get)
+        # desinated next src node
         print "",x,"trials result"
-        #print visited,"is fixed"
-        sorted_x = sorted(unvisited.items(), key=operator.itemgetter(1))
+        sorted_x = sorted(n_visited.items(), key=operator.itemgetter(1))
+        # sort based on value
         sorted_x.reverse
         print sorted_x
         print ""
@@ -62,10 +69,10 @@ def dijkstra(dic,src,dest,visited=[],distances={},predecessors={}):
         dijkstra(dic,x,dest,visited,distances,predecessors)
         #recursive
 
-def inp_value(i,j):
-    dic[i][j] = int(raw_input())
-    if dic[i][j] == 0:
-        dic[i][j] = float('inf')
+def inp_value(col,row):
+    dic[col][row] = int(raw_input())
+    if dic[col][row] == 0:
+        dic[col][row] = float('inf')
 
 
 #__main__
@@ -89,9 +96,10 @@ if num == "Y" or num == "y":
                 continue
             if j == 0 :
                 print "Input the",(i),"value - to source node :",
-                dic[i][j] = float(raw_input())
-                if dic[i][j] == 0:
-                    dic[i][j] = float('inf')
+                #dic[i][j] = float(raw_input())
+                #if dic[i][j] == 0:
+                #    dic[i][j] = float('inf')
+                inp_value(i,j)
                 #print "dic",(i),(j)," is ",dic[i][j]
                 continue
             elif j == column-1:
