@@ -1,0 +1,11 @@
+F1::
+MouseGetPos, MouseX, MouseY
+Clipboard = %MouseX%, %MouseY%
+Tooltip, X:%MouseX%`nY:%MouseY%`n
+return
+
+#q::
+{
+	Msgbox, Bye~
+	ExitApp
+}
